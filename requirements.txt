@@ -1,0 +1,8 @@
+Flask==0.12.2
+gunicorn==19.7.1
+Jinja2==2.9.6
+Werkzeug==0.12.2
+
+numpy==1.13.3
+pandas==0.21.0
+scipy==0.19.0
