@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import pickle
 
+
 def titleize_burrito_row(i, pd_row):
     b_type = pd_row[0]
     b_vendor = pd_row[1]
@@ -14,6 +15,8 @@ def titleize_burrito_row(i, pd_row):
 
 app = Flask(__name__)
 app.vars = {}
+app.secret_key = 'development key'
+
 app.vars["df_complete"] = pickle.load(open("clean-burrito-pandas.pkl", "rb"))
 features = [
     "Chips_1h",
@@ -63,17 +66,24 @@ app.vars["burrito_titles"] = [
     titleize_burrito_row(idx, row) for idx, row in app.vars["df_complete"].iterrows()
 ]
 
-class BurritoPicker(Form):
-	pick = SelectField("user_choice", choices = [(idx, title) for idx, title in enumerate(app.vars['burrito_titles'])])
-	submit = SubmitField("confirm")
 
+class Burrito_Picker(Form):
+    pick = SelectField(
+        "user_choice",
+        choices=[(idx, title) for idx, title in enumerate(app.vars["burrito_titles"])],
+    )
+    submit = SubmitField("Confirm")
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        print(app.vars["burrito_titles"])
-        return render_template("index.html", burrito_picker = selector ,burrito_list=app.vars["burrito_titles"])
+        burrito_picker = Burrito_Picker()
+        return render_template(
+            "index.html",
+            burrito_picker=burrito_picker,
+            burrito_list=app.vars["burrito_titles"],
+        )
 
     else:
         return render_template("index.html")
