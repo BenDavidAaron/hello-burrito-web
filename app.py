@@ -3,11 +3,13 @@ import numpy as np
 import pandas as pd
 import pickle
 
+
 def titleize_burrito_row(i, pd_row):
-	b_type = pd_row[0]
-	b_vendor = pd_row[1]
-	b_cost = pd_row[8]
-	return f"#{i} {b_vendor}-{b_type}(${b_cost})"
+    b_type = pd_row[0]
+    b_vendor = pd_row[1]
+    b_cost = pd_row[8]
+    return f"#{i} {b_vendor}-{b_type}(${b_cost})"
+
 
 app = Flask(__name__)
 app.vars = {}
@@ -56,19 +58,22 @@ features = [
 app.vars["df_features"] = app.vars["df_complete"][features]
 app.vars["knn"] = pickle.load(open("k-nearest-burritos.pkl", "rb"))
 
-app.vars['burrito_titles'] = [titleize_burrito_row(idx, row) for idx, row in app.vars['df_complete'].iterrows()]
-'''for idx, row in app.vars['df_complete']:
+app.vars["burrito_titles"] = [
+    titleize_burrito_row(idx, row) for idx, row in app.vars["df_complete"].iterrows()
+]
+"""for idx, row in app.vars['df_complete']:
 	titleize_burrito_row(idx, row)
 	b_type = row[0]
 	b_vendor = row[1]
 	b_cost = row[8]
-	selection_list.append(f"{b_vendor}-{b_type}(${b_cost})")'''
+	selection_list.append(f"{b_vendor}-{b_type}(${b_cost})")"""
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        return render_template("index.html", burrito_list = app.vars['burrito_titles'])
+        print(app.vars["burrito_titles"])
+        return render_template("index.html", burrito_list=app.vars["burrito_titles"])
 
     else:
         return render_template("index.html")
