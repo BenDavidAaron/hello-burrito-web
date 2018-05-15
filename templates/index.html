@@ -8,21 +8,28 @@
   </p>
   <TABLE>
   	<tr>
-  		<th>
-  			Pick a Burrito here:
-  		</th>
-  		<th>
-  			It's Buddies are:
-  		</th>
-  	</tr>
-  	<tr>
-  		<td>
-  			this is where the SELECT element goes
-  		</td>
-  		<td>
-  			this is where the results display in...a nested table?
-  		</td>
-  	</tr>	
+	  	<th>
+			Pick a Burrito here:
+		</th>
+	</tr>
+	<tr>
+		<td>
+			<form method="POST">
+				{{burrito_picker.pick}}
+				{{burrito_picker.submit}}
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			It's Buddies are:
+		</th>
+	</tr>
+	<tr>
+		<td>
+			this is where the results display in...a nested table?
+		</td>
+	</tr>
   </TABLE>
   <h3>Why?</h3>
   <p>
