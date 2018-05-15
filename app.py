@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request
+from flask_wtf import Form
+from wtforms import SelectField, SubmitField
 import numpy as np
 import pandas as pd
 import pickle
-
 
 def titleize_burrito_row(i, pd_row):
     b_type = pd_row[0]
@@ -61,19 +62,18 @@ app.vars["knn"] = pickle.load(open("k-nearest-burritos.pkl", "rb"))
 app.vars["burrito_titles"] = [
     titleize_burrito_row(idx, row) for idx, row in app.vars["df_complete"].iterrows()
 ]
-"""for idx, row in app.vars['df_complete']:
-	titleize_burrito_row(idx, row)
-	b_type = row[0]
-	b_vendor = row[1]
-	b_cost = row[8]
-	selection_list.append(f"{b_vendor}-{b_type}(${b_cost})")"""
+
+class BurritoPicker(Form):
+	pick = SelectField("user_choice", choices = [(idx, title) for idx, title in enumerate(app.vars['burrito_titles'])])
+	submit = SubmitField("confirm")
+
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
         print(app.vars["burrito_titles"])
-        return render_template("index.html", burrito_list=app.vars["burrito_titles"])
+        return render_template("index.html", burrito_picker = selector ,burrito_list=app.vars["burrito_titles"])
 
     else:
         return render_template("index.html")
