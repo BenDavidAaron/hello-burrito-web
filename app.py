@@ -106,8 +106,8 @@ def index():
 
         neighbor_reports = []
         for neighbor_result, score in zip(neighbors_results, scores):
-            similarity = (1-score)*100
-            neighbor_reports.append(f' {similarity:.2f}% match - {neighbor_result}')
+            similarity = (1 - score) * 100
+            neighbor_reports.append(f" {similarity:.2f}% match - {neighbor_result}")
 
         return render_template(
             "index.html",
