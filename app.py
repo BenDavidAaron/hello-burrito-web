@@ -7,15 +7,19 @@ import pickle
 
 
 def titleize_burrito_row(i, pd_row):
-    b_type = pd_row[0]
-    b_vendor = pd_row[1]
+    b_type = pd_row[0].strip().title()
+    b_vendor = pd_row[1].strip()
     b_cost = pd_row[8]
-    return f"#{i} {b_vendor}-{b_type}(${b_cost})"
+    title = "#{i} {b_vendor} Burrito @ {b_type}(${b_cost})"
+    if len(title) > 20:
+        split = title.split("@")
+        title = "\n".join(split)
+    return f"#{i} {b_vendor} Burrito @ {b_type}(${b_cost})"
 
 
 app = Flask(__name__)
 app.vars = {}
-app.secret_key = 'development key'
+app.secret_key = "development key"
 
 app.vars["df_complete"] = pickle.load(open("clean-burrito-pandas.pkl", "rb"))
 features = [
@@ -77,8 +81,8 @@ class Burrito_Picker(Form):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    burrito_picker = Burrito_Picker()
     if request.method == "GET":
-        burrito_picker = Burrito_Picker()
         return render_template(
             "index.html",
             burrito_picker=burrito_picker,
@@ -86,7 +90,13 @@ def index():
         )
 
     else:
-        return render_template("index.html")
+        query_index = request.values["pick"]
+
+        return render_template(
+            "index.html",
+            burrito_picker=burrito_picker,
+            burrito_list=app.vars["burrito_titles"],
+        )
 
 
 if __name__ == "__main__":
