@@ -8,3 +8,4 @@ Werkzeug==0.12.2
 numpy==1.13.3
 pandas==0.21.0
 scipy==0.19.0
+scikit-learn==0.19.1
