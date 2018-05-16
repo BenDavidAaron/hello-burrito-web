@@ -98,17 +98,22 @@ def index():
         neighbors = predictions[1][0]  # two lines are easier to read after linting
 
         neighbors_results = []
-        for neighbor, score in zip(neighbors, scores):
+        for neighbor in neighbors:
             neighbor_text = titleize_burrito_row(
                 neighbor, app.vars["df_complete"].iloc[neighbor]
             )
             neighbors_results.append(neighbor_text)
 
+        neighbor_reports = []
+        for neighbor_result, score in zip(neighbors_results, scores):
+            similarity = (1-score)*100
+            neighbor_reports.append(f' {similarity:.2f}% match - {neighbor_result}')
+
         return render_template(
             "index.html",
             burrito_picker=burrito_picker,
             burrito_list=app.vars["burrito_titles"],
-            neighbors=neighbors_results,  # TODO: make formatting better
+            neighbors=neighbor_reports,  # TODO: make formatting better
         )
 
 
