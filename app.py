@@ -91,17 +91,17 @@ def index():
 
     else:
         query_index = request.values["pick"]
-        print(query_index)
-        print(app.vars["df_features"].iloc[[query_index]]) #why the heck is the index a list within a list? Whatever it'll work
-        #print(app.vars["df_features"].iloc[query_index])
-        '''scores, neighbors = app.vars["knn"].kneighbors(
-            app.vars["df_features"].iloc[query_index]
-        )'''
+        #print(query_index)
+        #print(app.vars["df_features"].iloc[[query_index]]) #why the heck is the index a list within a list? Whatever it'll work
+        predictions = app.vars["knn"].kneighbors(
+            app.vars["df_features"].iloc[[query_index]]
+        )
+        scores, neighbors = predictions[0][0], predictions[1][0]#unpack the goofy predictions data structure
         return render_template(
             "index.html",
             burrito_picker=burrito_picker,
             burrito_list=app.vars["burrito_titles"],
-            neighbors=query_index,
+            neighbors={'n':neighbors, 's':scores}
         )
 
 
