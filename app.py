@@ -108,7 +108,7 @@ def index():
             "index.html",
             burrito_picker=burrito_picker,
             burrito_list=app.vars["burrito_titles"],
-            neighbors=" | ".join(neighbors_results),  # TODO: make formatting better
+            neighbors=neighbors_results,  # TODO: make formatting better
         )
 
 

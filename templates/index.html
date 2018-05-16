@@ -28,7 +28,11 @@
 	</tr>
 	<tr>
 		<td>
-			{{neighbors}}
+			<ul>
+				{% for neighbor in neighbors %}
+				<li>{{ neighbor }}</li>
+				{% endfor %}
+			</ul>
 		</td>
 	</tr>
   </TABLE>
