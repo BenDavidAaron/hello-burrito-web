@@ -2,42 +2,68 @@
 <title>Hello-Burrito 🌯</title>
 <link rel=stylesheet type=text/css href='{{ url_for('static', filename='style.css')}}'>
 <div class=page>
-  <h1>San Diego 🌯Burrito🌯 Buddy</h1>
-  <p>
-  	TODO: Intro Goes Here
-  </p>
-  <TABLE>
-  	<tr>
-	  	<th>
-			Pick a Burrito here:
-		</th>
-	</tr>
-	<tr>
-		<td>
-			<form method="POST">
-				{{burrito_picker.pick}}
-				<br>
-				{{burrito_picker.submit}}
-			</form>
-		</td>
-	</tr>
-	<tr>
-		<th>
-			It's Buddies are:
-		</th>
-	</tr>
-	<tr>
-		<td>
-			<ol>
-				{% for neighbor in neighbors %}
-				<li>{{ neighbor }}</li>
-				{% endfor %}
-			</ol>
-		</td>
-	</tr>
-  </TABLE>
-  <h3>Why?</h3>
-  <p>
-  	TODO: put the justification here, probably should link to the <a href="https://www.kaggle.com/srcole/burritos-in-san-diego">original dataset</a> and some videos about San Diego burritos. 
-  </p>
+  <div class="header">
+    <h1>
+      San Diego 🌯Burrito🌯 Buddy
+    </h1>
+    <p>
+      Welcome to BurritoBuddy! This is a database of burritos in San Diego, California. The app also shows you a given burrito's seven closest buddies, or the burritos that are most similar to it based on it's price, fillings, and reviews. Just two steps to hot, delicious goodness:
+    </p>
+    <ol>
+      <li>Select a Burrito you've previously enjoyed (from the dropdown menu)</li>
+      <li>Click "Submit"</li>
+      <li>Wait patiently while we figure out it's buddies</li>
+      <li>Check the list</li>
+      <li>Explore San Diego and enjoy our suggestions</li>
+      <li>Pick your favorite burrito from the list and start again untill you've tried them all!</li>
+      <li><i><b>Suggested:</b> Take a periodic break, your cholesterol will thank you</i></li>
+    </ol>
+  </div>
+  <div class="app-body">
+    <TABLE>
+      <tr>
+        <th>
+          Pick a Burrito here:
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <form method="POST">
+            {{burrito_picker.pick}}
+            <br>
+            {{burrito_picker.submit}}
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          It's Buddies are:
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <ol>
+            {% for neighbor in neighbors %}
+            <li>{{ neighbor }}</li>
+            {% endfor %}
+          </ol>
+        </td>
+      </tr>
+    </TABLE>
+  </div>
+  <div class="footer">
+    <h3>How did I make this?</h3>
+    <p>
+      I started by searching for a dataset of individual burritos with supporting data. Luckily kaggle had <a href="https://www.kaggle.com/srcole/burritos-in-san-diego">this dataset</a>, which suited nicely, despite the limitation to burritos in San Diego. I then used K-Nearest Neighbors to cluster the burritos by price and ingredients (represented as a one hot encoded 1d vector). Clusters of 7 burritos are then displayed. The webapp runs on Flask for routing and forms, Pandas to manipulate data, and SciKit-Learn for finding clusters. 
+    </p>
+    <h3>
+      Why did I make this?
+    </h3>
+    <p>
+      Two of my great passions in life are Data Science and Mexican Cuisine. The Bay Area's reputation for quality taqueria's was a signifiant motivator for my move out west. It was only natural that I've blended the two interests here. 
+    </p>
+    <p>
+      I hope it serves you well next time you're in San Diego, and stay tuned for expansions into Northern California. 
+    </p>
+  </div>
 </div>
